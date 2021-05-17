@@ -1,4 +1,5 @@
 import json
+from scoreCalculator import *
 
 def isValidAnagram(proposedWord, generatedWord):
     sortedProposedWord = sorted(proposedWord)
@@ -27,7 +28,7 @@ class WordChecker:
         if isLongEnough(proposedWord) & \
                 isValidAnagram(proposedWord, generatedWord) & \
                 self.isValidWord(proposedWord):
-                return len(proposedWord) #TODO - replace with scrabble scoring
+            return scoreCalculator(proposedWord)
         return 0
 
     def isValidWord(self,proposedWord):

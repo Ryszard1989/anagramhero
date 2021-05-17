@@ -9,7 +9,7 @@ class GameManager:
         self.highSessionScore = 0
         self.wordChecker = WordChecker()
         self.wordGenerator = WordGenerator()
-        self.gameLength = 120
+        self.gameLength = 60
         self.userEnteredWord = ""
         self.generatedWord = ""
         self.start = time.time()
