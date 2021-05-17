@@ -1,14 +1,6 @@
 from wordChecker import *
-import string
-import random
 import time
-
-def generateRandomWord(wordLength):
-    lowerLetters = string.ascii_lowercase
-    generatedWord = ""
-    for x in range(0, wordLength):
-        generatedWord += random.choice(lowerLetters)
-    return generatedWord
+from wordGenerator import *
 
 class GameManager:
     def __init__(self):
@@ -16,7 +8,8 @@ class GameManager:
         self.currentScore = 0 #Reset for each user in a given session
         self.highSessionScore = 0
         self.wordChecker = WordChecker()
-        self.gameLength = 10
+        self.wordGenerator = WordGenerator()
+        self.gameLength = 120
         self.userEnteredWord = ""
         self.generatedWord = ""
         self.start = time.time()
@@ -43,7 +36,7 @@ class GameManager:
         self.currentTime = time.time()
 
     def showUserNewGeneratedWord(self):
-        self.generatedWord = generateRandomWord(10)
+        self.generatedWord = self.wordGenerator.generateRandomWord(7)
         print("Make a word from: " + self.generatedWord)
 
     def takeUsersEnteredWord(self):
@@ -77,4 +70,4 @@ class GameManager:
         playAgain = raw_input("Play again? y/n")
         if playAgain is 'y':
             self.currentScore = 0
-            self.startGame()
+            self.manageGame()
