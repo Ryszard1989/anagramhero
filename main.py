@@ -1,7 +1,10 @@
 from gameManager import *
 
 def main():
-    print("Lets play")
+    dash = '-' * 40
+    print(dash)
+    print("{:^40}".format("ANAGRAM HERO"))
+    print(dash)
     gm = GameManager()
     gm.manageGame()
 
