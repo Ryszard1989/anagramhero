@@ -35,12 +35,14 @@ class HighScoreTable:
         if newHighScore is True:
             self.highScoreTable.append(highScore)
         self.highScoreTable.sort(key=takeSecond, reverse=True)
+        del self.highScoreTable[5:] #TODO - potential bug here when high score is last on list?
         self.printHighScores()
         with open(self.fp, 'wb') as out:
             csv_out = csv.writer(out)
             csv_out.writerow(['name', 'score'])
             for x in range(5):
                 csv_out.writerow(self.highScoreTable[x])
+
 
     def printHighScores(self):
         dash = '-' * 20

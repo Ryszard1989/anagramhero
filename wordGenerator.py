@@ -34,15 +34,50 @@ def createScrabbleDistribution():
     scrabbleSet += "z"
     return scrabbleSet
 
+class ScrabbleTiles:
+    def __init__(self):
+        self.tiles = ""
+        self.multiplier = False
+        self.doubleLetter = None
+        self.tripleLetter = None
+        self.doubleWord = None
+        self.tripleWord = None
+
+
+def addMultiplier(scrabbleTiles):
+    multipliers = [None, None, None, "DL", "TL", "DW", "TW"]
+    multiplier = random.choice(multipliers)
+    if not multiplier:
+        scrabbleTiles.multiplier = False
+    elif multiplier is "DL":
+        scrabbleTiles.multiplier = True
+        scrabbleTiles.doubleLetter = random.choice(scrabbleTiles.tiles)
+    elif multiplier is "TL":
+        scrabbleTiles.multiplier = True
+        scrabbleTiles.tripleLetter = random.choice(scrabbleTiles.tiles)
+    elif multiplier is "DW":
+        scrabbleTiles.multiplier = True
+        scrabbleTiles.doubleWord = True
+    elif multiplier is "TW":
+        scrabbleTiles.multiplier = True
+        scrabbleTiles.tripleWord = True
+    return scrabbleTiles
+
 class WordGenerator:
     def __init__(self):
         self.scrabbleDistribution = createScrabbleDistribution()
 
     def generateRandomWord(self, wordLength):
-        generatedWord = ""
+        generatedTiles = ""
         for x in range(0, wordLength):
-            generatedWord += random.choice(self.scrabbleDistribution)
-        return generatedWord
+            generatedTiles += random.choice(self.scrabbleDistribution)
+        scrabbleTiles = ScrabbleTiles()
+        scrabbleTiles.tiles = generatedTiles
+        scrabbleTiles = addMultiplier(scrabbleTiles)
+        return scrabbleTiles
+
+
+
 
 
 

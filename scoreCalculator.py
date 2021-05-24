@@ -28,13 +28,30 @@ def getLetterScores():
                     }
     return letterScores
 
-def scoreCalculator(word):
+def scoreCalculator(word, scrabbleTiles):
     letterScores = getLetterScores()
     score = 0
     scoreExplanation = "Score breakdown: "
     for char in word:
-        score += letterScores[char]
-        scoreExplanation += (char + ": " + str(letterScores[char]) + ", ")
+        scoreToAdd = letterScores[char]
+        if scrabbleTiles.multiplier:
+            if scrabbleTiles.doubleLetter is char:
+                scoreToAdd = scoreToAdd * 2
+                scoreExplanation += (char + ": " + str(letterScores[char]) + "(x2) , ")
+            elif scrabbleTiles.tripleLetter is char:
+                scoreToAdd = scoreToAdd * 3
+                scoreExplanation += (char + ": " + str(letterScores[char]) + "(x3) , ")
+            else:
+                scoreExplanation += (char + ": " + str(letterScores[char]) + ", ")
+        score += scoreToAdd
+    if scrabbleTiles.multiplier:
+        if scrabbleTiles.doubleWord:
+            score = score * 2
+            scoreExplanation += " (Word x2)"
+        if scrabbleTiles.tripleWord:
+            score = score * 3
+            scoreExplanation += " (Word x3)"
+
     print scoreExplanation
     return score
 
