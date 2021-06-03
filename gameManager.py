@@ -11,7 +11,7 @@ class GameManager:
         self.currentScore = 0 #Reset for each user in a given session
         self.wordChecker = WordChecker()
         self.wordGenerator = WordGenerator()
-        self.gameLength = 10
+        self.gameLength = 60
         self.userEnteredWord = ""
         self.generatedTiles = ""
         self.start = time.time()
