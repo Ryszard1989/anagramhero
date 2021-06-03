@@ -1,9 +1,16 @@
 import csv
 from csv import reader
+import os.path
 
 def getHighScoresFromFile(fp):
     # read csv file as a list of lists
-    with open(fp, 'r') as read_obj:
+    fileExists = os.path.exists(fp)
+    print(fileExists)
+    if fileExists:
+        openMode = 'r'
+    else:
+        openMode = 'w+'
+    with open(fp, openMode) as read_obj:
         # pass the file object to reader() to get the reader object
         csv_reader = reader(read_obj)
         # Pass reader object to list() to get a list of lists
@@ -25,23 +32,31 @@ class HighScoreTable:
             return int(elem[1])
         self.highScoreTable.sort(key=takeSecond, reverse=True)
         newHighScore = False
-        for score in self.highScoreTable:
-            if currentScore > int(score[1]) or len(self.highScoreTable)<5:
-                newHighScore = True
-                print("You got a new high score!")
-                userName = raw_input("Enter your name: ")
-                highScore = [userName, currentScore]
-                break
+        def userInputHighScore(aHighScore):
+            print("You got a new high score!")
+            userName = raw_input("Enter your name: ")
+            scoreDetails = [userName, aHighScore]
+            return scoreDetails
+        if len(self.highScoreTable) is 0:
+            newHighScore = True
+            highScore = userInputHighScore(currentScore)
+        else:
+            for score in self.highScoreTable:
+                if currentScore > int(score[1]) or len(self.highScoreTable)<5:
+                    newHighScore = True
+                    highScore = userInputHighScore(currentScore)
+                    break
         if newHighScore is True:
             self.highScoreTable.append(highScore)
         self.highScoreTable.sort(key=takeSecond, reverse=True)
         del self.highScoreTable[5:] #TODO - potential bug here when high score is last on list?
-        self.printHighScores()
         with open(self.fp, 'wb') as out:
             csv_out = csv.writer(out)
             csv_out.writerow(['name', 'score'])
-            for x in range(5):
+            for x in range(len(self.highScoreTable)):
                 csv_out.writerow(self.highScoreTable[x])
+            out.close()
+
 
 
     def printHighScores(self):
