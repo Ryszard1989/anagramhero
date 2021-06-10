@@ -37,7 +37,7 @@ class HighScoreTable:
             userName = raw_input("Enter your name: ")
             scoreDetails = [userName, aHighScore]
             return scoreDetails
-        if len(self.highScoreTable) is 0:
+        if len(self.highScoreTable) == 0:
             newHighScore = True
             highScore = userInputHighScore(currentScore)
         else:
@@ -46,7 +46,7 @@ class HighScoreTable:
                     newHighScore = True
                     highScore = userInputHighScore(currentScore)
                     break
-        if newHighScore is True:
+        if newHighScore:
             self.highScoreTable.append(highScore)
         self.highScoreTable.sort(key=takeSecond, reverse=True)
         del self.highScoreTable[5:] #TODO - potential bug here when high score is last on list?

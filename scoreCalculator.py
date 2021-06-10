@@ -35,10 +35,10 @@ def scoreCalculator(word, scrabbleTiles):
     for char in word:
         scoreToAdd = letterScores[char]
         if scrabbleTiles.multiplier:
-            if scrabbleTiles.doubleLetter is char:
+            if scrabbleTiles.doubleLetter == char:
                 scoreToAdd = scoreToAdd * 2
                 scoreExplanation += (char + ": " + str(letterScores[char]) + "(x2) , ")
-            elif scrabbleTiles.tripleLetter is char:
+            elif scrabbleTiles.tripleLetter == char:
                 scoreToAdd = scoreToAdd * 3
                 scoreExplanation += (char + ": " + str(letterScores[char]) + "(x3) , ")
             else:

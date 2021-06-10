@@ -49,16 +49,16 @@ def addMultiplier(scrabbleTiles):
     multiplier = random.choice(multipliers)
     if not multiplier:
         scrabbleTiles.multiplier = False
-    elif multiplier is "DL":
+    elif multiplier == "DL":
         scrabbleTiles.multiplier = True
         scrabbleTiles.doubleLetter = random.choice(scrabbleTiles.tiles)
-    elif multiplier is "TL":
+    elif multiplier == "TL":
         scrabbleTiles.multiplier = True
         scrabbleTiles.tripleLetter = random.choice(scrabbleTiles.tiles)
-    elif multiplier is "DW":
+    elif multiplier == "DW":
         scrabbleTiles.multiplier = True
         scrabbleTiles.doubleWord = True
-    elif multiplier is "TW":
+    elif multiplier == "TW":
         scrabbleTiles.multiplier = True
         scrabbleTiles.tripleWord = True
     return scrabbleTiles

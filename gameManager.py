@@ -11,7 +11,7 @@ class GameManager:
         self.currentScore = 0 #Reset for each user in a given session
         self.wordChecker = WordChecker()
         self.wordGenerator = WordGenerator()
-        self.gameLength = 10
+        self.gameLength = 60
         self.userEnteredWord = ""
         self.generatedTiles = ""
         self.start = time.time()
@@ -53,13 +53,10 @@ class GameManager:
                 print("*TRIPLE WORD SCORE*")
 
     def printLetterBonus(self, bonusMultiplier):
-        if bonusMultiplier is 2:
-            letterIndex = self.generatedTiles.tiles.find(self.generatedTiles.doubleLetter)
-        elif bonusMultiplier is 3:
-            letterIndex = self.generatedTiles.tiles.find(self.generatedTiles.tripleLetter)
+        letterIndex = self.getBonusLetterIndex(bonusMultiplier)
         multiplierIndicator = ""
         for i in range(len(self.generatedTiles.tiles)):
-            if i is letterIndex:
+            if i == letterIndex:
                 multiplierIndicator += '^'
             else:
                 multiplierIndicator += ' '
@@ -68,6 +65,14 @@ class GameManager:
         multiplierDetail[letterIndex + 1] = str(bonusMultiplier)
         print(multiplierIndicator)
         print(''.join(multiplierDetail))
+
+    def getBonusLetterIndex(self, bonusMultiplier):
+        letterIndex = None
+        if bonusMultiplier == 2:
+            letterIndex = self.generatedTiles.tiles.find(self.generatedTiles.doubleLetter)
+        elif bonusMultiplier == 3:
+            letterIndex = self.generatedTiles.tiles.find(self.generatedTiles.tripleLetter)
+        return letterIndex
 
     def takeUsersEnteredWord(self):
         self.userEnteredWord = raw_input("Enter word: ")
@@ -94,6 +99,6 @@ class GameManager:
 
     def offerReplay(self):
         playAgain = raw_input("Play again? y/n")
-        if playAgain is 'y':
+        if playAgain == 'y':
             self.currentScore = 0
             self.manageGame()
