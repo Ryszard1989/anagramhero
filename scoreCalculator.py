@@ -52,7 +52,7 @@ def scoreCalculator(word, scrabbleTiles):
             score = score * 3
             scoreExplanation += " (Word x3)"
 
-    print scoreExplanation
+    print(scoreExplanation)
     return score
 
 

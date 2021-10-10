@@ -3,6 +3,7 @@ import time
 from wordGenerator import *
 from highScore import *
 from scoreCalculator import *
+#import tkinter as tk
 
 class GameManager:
     def __init__(self):
@@ -11,15 +12,27 @@ class GameManager:
         self.currentScore = 0 #Reset for each user in a given session
         self.wordChecker = WordChecker()
         self.wordGenerator = WordGenerator()
-        self.gameLength = 60
+        self.gameLength = 5
         self.userEnteredWord = ""
         self.generatedTiles = ""
         self.start = time.time()
         self.currentTime = time.time()
+        #self.gameWindow = tk.Tk()
+        #self.gameWindow.title("Anagram Hero")
 
     def manageGame(self):
         self.highScoreTable.printHighScores()
         self.kickOffNewGame()
+
+    def kickOffNewGame(self):
+        print("Make words of 2 or more letters from the letters provided.")
+        input("Hit any key to start your 60 seconds!")
+        print("new game started")
+        self.start = time.time()
+        self.currentTime = time.time()
+        self.mainGameLoop()
+
+    def mainGameLoop(self):
         while self.currentTime - self.start < self.gameLength:
             print("")
             self.showUserNewGeneratedTiles()
@@ -29,14 +42,8 @@ class GameManager:
             self.updateCurrentTime()
         self.endGame()
         self.highScoreTable.recordHighScore(self.currentScore)
+        self.highScoreTable.printHighScores()
         self.offerReplay()
-
-    def kickOffNewGame(self):
-        print("Make words of 2 or more letters from the letters provided.")
-        raw_input("Hit any key to start your 60 seconds!")
-        print("new game started")
-        self.start = time.time()
-        self.currentTime = time.time()
 
     def showUserNewGeneratedTiles(self):
         self.generatedTiles = self.wordGenerator.generateRandomWord(7)
@@ -75,7 +82,7 @@ class GameManager:
         return letterIndex
 
     def takeUsersEnteredWord(self):
-        self.userEnteredWord = raw_input("Enter word: ")
+        self.userEnteredWord = input("Enter word: ")
 
     def calculateWordScore(self):
         validWord = self.wordChecker.checkWord(self.userEnteredWord, self.generatedTiles.tiles)
@@ -98,7 +105,7 @@ class GameManager:
         print ("Final Score: " + str(self.currentScore))
 
     def offerReplay(self):
-        playAgain = raw_input("Play again? y/n")
+        playAgain = input("Play again? y/n")
         if playAgain == 'y':
             self.currentScore = 0
-            self.manageGame()
+            self.kickOffNewGame()

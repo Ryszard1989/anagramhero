@@ -2,6 +2,18 @@ import csv
 from csv import reader
 import os.path
 
+#TODO!
+#Traceback (most recent call last):
+#  File "main.py", line 12, in <module>
+#    main()
+#  File "main.py", line 9, in main
+#    gm.manageGame()
+#  File "/home/rszulc/personal/anagramhero/gameManager.py", line 34, in manageGame
+#    self.highScoreTable.recordHighScore(self.currentScore)
+#  File "/home/rszulc/personal/anagramhero/highScore.py", line 56, in recordHighScore
+#    csv_out.writerow(['name', 'score'])
+#TypeError: a bytes-like object is required, not 'str'
+
 def getHighScoresFromFile(fp):
     # read csv file as a list of lists
     fileExists = os.path.exists(fp)
@@ -34,7 +46,8 @@ class HighScoreTable:
         newHighScore = False
         def userInputHighScore(aHighScore):
             print("You got a new high score!")
-            userName = raw_input("Enter your name: ")
+            userName = \
+                input("Enter your name: ")
             scoreDetails = [userName, aHighScore]
             return scoreDetails
         if len(self.highScoreTable) == 0:
@@ -50,7 +63,7 @@ class HighScoreTable:
             self.highScoreTable.append(highScore)
         self.highScoreTable.sort(key=takeSecond, reverse=True)
         del self.highScoreTable[5:] #TODO - potential bug here when high score is last on list?
-        with open(self.fp, 'wb') as out:
+        with open(self.fp, 'w') as out:
             csv_out = csv.writer(out)
             csv_out.writerow(['name', 'score'])
             for x in range(len(self.highScoreTable)):
